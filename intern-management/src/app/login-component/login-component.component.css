@@ -1,0 +1,57 @@
+ 
+    
+    .input-field {
+      width: 100%;
+      border-radius: 0.375rem;
+      border: 1px solid #d1d5db;
+      background-color: white;
+      padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: #1f2937;
+    }
+
+    .input-field::placeholder {
+      color: #9ca3af;
+    }
+
+    .input-field:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #5a9bd6;
+    }
+
+    
+    .icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 0.875rem;
+      pointer-events: none;
+    }
+
+    .submit-btn-disabled {
+      width: 100%;
+      background-color: #8bbde6;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      cursor: not-allowed;
+    }
+
+    .submit-btn-enabled {
+      width: 100%;
+      background-color: #8bbde6;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn-enabled:hover {
+      background-color: #7aaed9;
+    }
+  
