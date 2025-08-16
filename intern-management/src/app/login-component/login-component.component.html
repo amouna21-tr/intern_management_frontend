@@ -1,24 +1,14 @@
-
-
-
- 
-  
-
-
- 
-
 <div class="bg-[#60A3D9] min-h-screen flex items-center justify-center font-sans px-4">
   <div class="bg-[#eaf4fb] rounded-xl shadow-lg w-full max-w-md p-8 flex flex-col items-center">
-    <!-- Use Angular assets folder path -->
     <img
       src="assets/logoo.png"
       width="500"
-      alt="Logo Société Tunisienne de l'Électricité et du Gaz, blue and red stylized flame with text"
+      alt="Logo"
       class="mb-8 w-40"
     />
     <h2 class="text-[#0a5ea8] font-semibold text-lg mb-6">Connexion</h2>
 
-    <form class="w-full" id="loginForm" onsubmit="return false;">
+    <form class="w-full" (ngSubmit)="seConnecter()">
       <!-- Email -->
       <label for="email" class="block text-xs font-semibold text-[#1f2937] mb-1">Email</label>
       <div class="relative mb-4">
@@ -27,6 +17,8 @@
           type="email"
           placeholder="Votre email"
           class="input-field"
+          [(ngModel)]="email"
+          name="email"
         />
         <i class="fas fa-envelope icon" aria-hidden="true"></i>
       </div>
@@ -39,24 +31,16 @@
           type="password"
           placeholder="Votre mot de passe"
           class="input-field"
+          [(ngModel)]="password"
+          name="password"
         />
         <i class="fas fa-lock icon" aria-hidden="true"></i>
       </div>
 
       <!-- Button -->
-      <button
-      (click)="onClickSignIn()"
-        type="submit"
-        id="submitBtn"
-        
-        class="submit-btn-disabled"
-      >
+      <button type="submit" id="submitBtn" class="submit-btn-disabled">
         Se connecter
       </button>
     </form>
   </div>
-
-  
 </div>
-
-

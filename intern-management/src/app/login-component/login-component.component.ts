@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-login-component',
@@ -7,11 +8,24 @@ import { Component, OnInit } from "@angular/core";
 })
 export class LoginComponentComponent implements OnInit {
 
-  constructor() { }
+email: string = ''; 
+  password: string = ''; 
 
-  ngOnInit(): void {
+  constructor(private router: Router) { } 
+
+  ngOnInit(): void { } 
+  
+  onClickSignIn() {
+  
+    console.log('Email:', this.email, 'Password:', this.password);
   }
- onClickSignIn(): void {
-  console.log("amouna");
- }
+  seConnecter() { 
+    if (this.email && this.password) { 
+      this.router.navigate(['/gestion-stagiaires']); 
+    } else {
+      alert('Veuillez entrer vos identifiants'); 
+    }
+  }
+
+  
 }
