@@ -1,0 +1,87 @@
+<div class="flex min-h-screen bg-[#3b6aa0] font-sans">
+
+  <!-- Sidebar -->
+  <nav class="bg-[#1f2937] w-48 flex flex-col p-6 space-y-6 text-white">
+    <div class="font-bold text-white text-lg">STEG Admin</div>
+    <a class="flex items-center space-x-2 text-gray-400 hover:text-white" href="#">
+      <i class="fas fa-chart-bar"></i>
+      <span>Statistiques</span>
+    </a>
+    <a class="flex items-center space-x-2 text-white font-semibold bg-[#374151] rounded px-2 py-1" href="#">
+      <i class="fas fa-users"></i>
+      <span>Gestion des stagiaires</span>
+    </a>
+    <a class="flex items-center space-x-2 text-red-600 hover:text-red-400" href="#">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Deconnexion</span>
+    </a>
+  </nav>
+
+  <!-- Main content -->
+  <main class="flex-1 p-6">
+
+    <!-- Header -->
+    <div class="bg-[#f8f8f8] rounded-md flex items-center justify-between px-6 py-3 mb-6" style="min-width: 600px">
+      <img alt="Drapeau tunisien" class="h-5 w-auto" src="assets/flag.png" />
+      <h1 class="text-center text-gray-800 font-semibold text-lg flex-1">Gestion Des Stagiaires</h1>
+      <img alt="Logo circulaire" class="h-7 w-auto" src="assets/logo.png" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex space-x-3 mb-6 justify-center">
+      <button class="bg-green-500 hover:bg-green-600 text-white text-xs font-normal rounded px-3 py-1" (click)="ajouterStagiaire()">+ Ajouter stagiaire</button>
+      <button class="bg-blue-400 hover:bg-blue-500 text-white text-xs font-normal rounded px-3 py-1" (click)="listeAttestations()">Liste des Attestations Retirees</button>
+    </div>
+
+    <!-- Search bar -->
+    <form class="flex justify-center mb-6" style="min-width: 600px" (ngSubmit)="rechercher()">
+      <div class="flex w-full max-w-xl rounded-md overflow-hidden">
+        <span class="flex items-center justify-center bg-[#f8f8f8] border border-r-0 border-gray-300 px-3 text-gray-400">
+          <i class="fas fa-search"></i>
+        </span>
+        <input class="flex-grow px-3 py-1 border border-l-0 border-gray-300 rounded-r-md text-xs text-gray-400 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Recherche globale (CIN, nom, email, etc.)"
+          type="text"
+          [(ngModel)]="recherche"
+          name="recherche"
+        />
+        <button class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-normal px-3 rounded-r-md" type="submit">Rechercher</button>
+      </div>
+    </form>
+
+    <!-- Table -->
+    <div class="overflow-x-auto rounded-md" style="min-width: 600px">
+      <table class="min-w-full text-xs text-left text-gray-700 rounded-md overflow-hidden">
+        <thead class="bg-[#4a6ea9] text-white">
+          <tr>
+            <th class="px-2 py-1 border border-[#4a6ea9]">CIN</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">NOM</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">PRENOM</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">EMAIL</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">TELEPHONE</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">INSTITUT</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">SPECIALITE</th>
+            <th class="px-2 py-1 border border-[#4a6ea9]">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr *ngFor="let stagiaire of stagiairesFiltres; let i = index">
+            <td class="px-2 py-1 border">{{ stagiaire.cin }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.nom }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.prenom }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.email }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.telephone }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.institut }}</td>
+            <td class="px-2 py-1 border">{{ stagiaire.specialite }}</td>
+            <td class="px-2 py-1 border space-x-2">
+              <button (click)="modifierStagiaire(i)" class="bg-yellow-500 text-white px-2 py-1 rounded">Modifier</button>
+              <button (click)="supprimerStagiaire(i)" class="bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
