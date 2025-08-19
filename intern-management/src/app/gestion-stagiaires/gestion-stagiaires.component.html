@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-[#3b6aa0] font-sans">
+<div class="flex min-h-screen bg-[#60A3D9] font-sans">
 
   <!-- Sidebar -->
   <nav class="bg-[#1f2937] w-48 flex flex-col p-6 space-y-6 text-white">
@@ -29,7 +29,8 @@
 
     <!-- Buttons -->
     <div class="flex space-x-3 mb-6 justify-center">
-      <button class="bg-green-500 hover:bg-green-600 text-white text-xs font-normal rounded px-3 py-1" (click)="ajouterStagiaire()">+ Ajouter stagiaire</button>
+      <button class="bg-green-500 hover:bg-green-600 text-white text-xs font-normal rounded px-3 py-1" 
+      [routerLink]="['/ajouter-stagiaire']">+ Ajouter stagiaire</button>
       <button class="bg-blue-400 hover:bg-blue-500 text-white text-xs font-normal rounded px-3 py-1" (click)="listeAttestations()">Liste des Attestations Retirees</button>
     </div>
 

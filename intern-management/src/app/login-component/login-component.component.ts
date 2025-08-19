@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router'; 
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login-component',
@@ -8,24 +9,37 @@ import { Router } from '@angular/router';
 })
 export class LoginComponentComponent implements OnInit {
 
-email: string = ''; 
+  email: string = ''; 
   password: string = ''; 
+  message: string = '';
 
-  constructor(private router: Router) { } 
+  constructor(private router: Router, private authService: AuthService) { } 
 
   ngOnInit(): void { } 
-  
-  onClickSignIn() {
-  
-    console.log('Email:', this.email, 'Password:', this.password);
-  }
-  seConnecter() { 
-    if (this.email && this.password) { 
-      this.router.navigate(['/gestion-stagiaires']); 
-    } else {
-      alert('Veuillez entrer vos identifiants'); 
-    }
-  }
 
-  
+  seConnecter() { 
+  if (this.email && this.password) { 
+    console.log('➡️ Sending login request:', this.email, this.password);
+
+    this.authService.login(this.email, this.password).subscribe(
+      (response) => {
+        console.log('⬅️ Backend response:', response); 
+
+        if (response.success) {
+          this.message = "✅ Connexion réussie !";
+          this.router.navigate(['/gestion-stagiaires']);
+        } else {
+          this.message = "❌ " + response.message;
+        }
+      },
+      (error) => {
+        console.error('⚠️ Connection error:', error); 
+        this.message = "⚠️ Erreur de connexion au serveur.";
+      }
+    );
+  } else {
+    alert('Veuillez entrer vos identifiants'); 
+  }
+}
+
 }

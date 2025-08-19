@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-gestion-stagiaires',
@@ -22,13 +24,16 @@ export class GestionStagiairesComponent implements OnInit {
 
   editingIndex: number | null = null;
 
-  constructor() { }
+  constructor(private router: Router) { }
+
 
   ngOnInit(): void { }
 
   ajouterStagiaire() {
-    this.ajouterOuModifierStagiaire();
-  }
+  this.router.navigate(['/ajouter-stagiaire']);
+}
+
+  
 
   listeAttestations() {
     alert('Liste des Attestations Retirees clicked');

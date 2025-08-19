@@ -1,0 +1,16 @@
+/* Use Inter font */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Input styling for consistency */
+input {
+  outline: none;
+}
+
+input:focus {
+  box-shadow: 0 0 0 1px #4F46E5;
+  border-color: #4F46E5;
+}
+
+/* Button hover effects are handled by Tailwind classes in HTML */
