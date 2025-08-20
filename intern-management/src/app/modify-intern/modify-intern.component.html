@@ -1,0 +1,100 @@
+<main class="min-h-screen flex justify-center py-24 px-4 bg-[#189AB4] font-sans">
+  <div class="max-w-3xl w-full">
+    <h1 class="text-white font-semibold text-lg mb-8">Modifier Stagiaire</h1>
+    <form class="bg-white rounded-xl p-8 space-y-10">
+
+      <!-- Section 1: Infos du stagiaire -->
+      <section>
+        <h2 class="text-[#1B1B35] font-semibold text-base mb-6">1 / 3 ) <span>infos du stagiaire:</span></h2>
+        <div class="space-y-6">
+          <div>
+            <label for="cin" class="block text-[#1B1B35] font-semibold text-sm mb-2">CIN</label>
+            <input type="text" id="cin" name="cin"
+              class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+              [(ngModel)]="stagiaire.cin" />
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-1/2">
+              <label for="nom" class="block text-[#1B1B35] font-semibold text-sm mb-2">Nom</label>
+              <input type="text" id="nom" name="nom"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.nom" />
+            </div>
+            <div class="w-1/2">
+              <label for="prenom" class="block text-[#1B1B35] font-semibold text-sm mb-2">Prénom</label>
+              <input type="text" id="prenom" name="prenom"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.prenom" />
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-1/2">
+              <label for="email" class="block text-[#1B1B35] font-semibold text-sm mb-2">Email</label>
+              <input type="email" id="email" name="email"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.email" />
+            </div>
+            <div class="w-1/2">
+              <label for="telephone" class="block text-[#1B1B35] font-semibold text-sm mb-2">Téléphone</label>
+              <input type="tel" id="telephone" name="telephone"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.telephone" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Infos de l'institut -->
+      <section>
+        <h2 class="text-[#1B1B35] font-semibold text-base mb-6">2 / 3 ) <span>infos de l'institut:</span></h2>
+        <div class="space-y-6">
+          <div>
+            <label for="institut" class="block text-[#1B1B35] font-semibold text-sm mb-2">Institut</label>
+            <input type="text" id="institut" name="institut"
+              class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+              [(ngModel)]="stagiaire.institut" />
+          </div>
+          <div>
+            <label for="specialite" class="block text-[#1B1B35] font-semibold text-sm mb-2">Spécialité</label>
+            <input type="text" id="specialite" name="specialite"
+              class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+              [(ngModel)]="stagiaire.specialite" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Infos de stage -->
+      <section>
+        <h2 class="text-[#1B1B35] font-semibold text-base mb-6">3 / 3 ) <span>infos de stage :</span></h2>
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-1/2">
+              <label for="date-debut" class="block text-[#1B1B35] font-semibold text-sm mb-2">Date de début</label>
+              <input type="date" id="date-debut" name="date-debut"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.date_debut" />
+            </div>
+            <div class="w-1/2">
+              <label for="date-fin" class="block text-[#1B1B35] font-semibold text-sm mb-2">Date de fin</label>
+              <input type="date" id="date-fin" name="date-fin"
+                class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+                [(ngModel)]="stagiaire.date_fin" />
+            </div>
+          </div>
+          <div>
+            <label for="objet-stage" class="block text-[#1B1B35] font-semibold text-sm mb-2">Objet de stage</label>
+            <input type="text" id="objet-stage" name="objet-stage"
+              class="border border-[#D9DBF1] rounded-md px-3 py-2 text-xs text-[#1B1B35] w-full"
+              [(ngModel)]="stagiaire.objet_stage" />
+          </div>
+        </div>
+      </section>
+
+      <button type="button" (click)="updateIntern()"
+        class="bg-blue-500 text-white px-4 py-2 rounded">Mettre à jour</button>
+
+    </form>
+  </div>
+</main>

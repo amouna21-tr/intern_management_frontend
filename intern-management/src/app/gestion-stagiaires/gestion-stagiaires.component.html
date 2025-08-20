@@ -80,7 +80,10 @@
             <td class="px-2 py-1 border">{{ stagiaire.institut }}</td>
             <td class="px-2 py-1 border">{{ stagiaire.specialite }}</td>
             <td class="px-2 py-1 border space-x-2">
-              <button (click)="modifierStagiaire(i)" class="bg-yellow-500 text-white px-2 py-1 rounded">Modifier</button>
+              <button [routerLink]="['/modify-intern', stagiaire.id]" class="bg-yellow-500 text-white px-2 py-1 rounded">
+           Modifier
+              </button>
+
               <button (click)="supprimerStagiaire(i)" class="bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
             </td>
           </tr>

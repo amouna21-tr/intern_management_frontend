@@ -8,13 +8,16 @@ import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { GestionStagiairesComponent } from './gestion-stagiaires/gestion-stagiaires.component';
 import { AddInternComponent } from './add-intern/add-intern.component';
+import { ModifyInternComponent } from './modify-intern/modify-intern.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponentComponent,
     GestionStagiairesComponent,
-    AddInternComponent
+    AddInternComponent,
+  
+    ModifyInternComponent
   ],
   imports: [
     BrowserModule,
