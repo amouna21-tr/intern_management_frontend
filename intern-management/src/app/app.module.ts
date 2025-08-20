@@ -9,6 +9,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { GestionStagiairesComponent } from './gestion-stagiaires/gestion-stagiaires.component';
 import { AddInternComponent } from './add-intern/add-intern.component';
 import { ModifyInternComponent } from './modify-intern/modify-intern.component';
+import { AttestationFormComponent } from './attestation-form/attestation-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { ModifyInternComponent } from './modify-intern/modify-intern.component';
     GestionStagiairesComponent,
     AddInternComponent,
   
-    ModifyInternComponent
+    ModifyInternComponent,
+  
+    AttestationFormComponent
   ],
   imports: [
     BrowserModule,
