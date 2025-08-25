@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-attestation-form',
@@ -16,7 +18,12 @@ export class AttestationFormComponent {
   dateFin: string = '';
   objetStage: string = '';
   attestationRetiree: string = '';
-   constructor(private route: ActivatedRoute) {}
+
+   constructor(
+    private route: ActivatedRoute ,
+    private router: Router
+
+   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -30,9 +37,11 @@ export class AttestationFormComponent {
       this.objetStage = params['objetStage'] || '';
     });
   }
+  
 
   afficherPDF() {
-    console.log({
+  this.router.navigate(['/pdf-page'], {
+    queryParams: {
       cin: this.cin,
       nom: this.nom,
       prenom: this.prenom,
@@ -42,7 +51,6 @@ export class AttestationFormComponent {
       dateFin: this.dateFin,
       objetStage: this.objetStage,
       attestationRetiree: this.attestationRetiree
-    });
-    // Here you can integrate jsPDF or html2pdf to generate PDF
-  }
-}
+    }
+  });
+}}

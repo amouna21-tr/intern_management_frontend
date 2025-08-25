@@ -1,0 +1,52 @@
+<!-- Floating chat toggle button -->
+<button class="chat-toggle" *ngIf="!isOpen" (click)="toggleChat()">
+  <img src="assets/chatbot-logo.png" alt="StegBot">
+</button>
+
+<!-- Chat panel -->
+<div class="chat-container" *ngIf="isOpen">
+  <div class="chat-header">
+    <div class="header-content">
+      <div class="logo">
+        <img src="assets/chatbot-logo.png" alt="StegBot Logo">
+      </div>
+      <div class="header-info">
+        <div class="chat-title">StegBot</div>
+        <div class="online-status">
+          <div class="status-dot"></div>
+          <span>en ligne</span>
+        </div>
+      </div>
+    </div>
+    <button class="close-btn" (click)="toggleChat()">×</button>
+  </div>
+
+  <div class="chat-messages" #chatMessages>
+    <div class="welcome-message" *ngIf="showWelcome">
+      Bienvenue ! Je suis StegBot, votre assistant virtuel.<br>
+      Comment puis-je vous aider aujourd'hui ?
+    </div>
+    <div *ngFor="let msg of messages" [ngClass]="msg.isUser ? 'user-message' : 'bot-message'" class="message">
+      {{ msg.text }}
+    </div>
+  </div>
+
+  <div class="typing-indicator" *ngIf="isTyping">
+    <span>•</span><span>•</span><span>•</span>
+  </div>
+
+  <div class="chat-input">
+    <input
+      type="text"
+      class="message-input"
+      [(ngModel)]="userMessage"
+      placeholder="Tapez votre message..."
+      (keydown.enter)="sendMessage()"
+    >
+    <button class="send-button" (click)="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+      </svg>
+    </button>
+  </div>
+</div>

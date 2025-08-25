@@ -1,0 +1,78 @@
+<div class="min-h-screen bg-gray-100 p-4">
+  
+  <!-- PDF Download Button -->
+  <button
+    (click)="downloadPDF()"
+    class="mb-6 bg-[#145DA0] text-white font-semibold py-2 px-4 rounded-md hover:bg-[#0f3d6f] transition-colors"
+  >
+    Télécharger PDF
+  </button>
+
+  <!-- A4 Document Container -->
+  <div class="mx-auto bg-white shadow-lg" style="width: 210mm; min-height: 297mm; padding: 25mm;">
+    
+    <!-- Attestation content starts -->
+    <div id="pdf-content">
+
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-[#145DA0] font-extrabold text-3xl leading-tight relative pb-2">
+          Attestation de stage
+          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-[#145DA0]"></span>
+        </h1>
+        <img
+          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijAjXs8EQbxmCWTD7htPuhza3n5ZOcTZmm3Jy57UXfse1eseX8e-3orFnp4eMbmmMYUpmQexW_wSI0X_xW2Dfy6rCOLqsmQXsycnvUlRRCnusrNw7cKHDO0pH_m2ZXZ_inVk9kCRLaiUvVrpKFf8SX2ecQ4Au03OqO4NgcuT5484JpoZyV2l8ptI7AcZk/w1600/steg.jpg"
+          alt="Logo STEG"
+          class="w-16 h-16 object-contain"
+        />
+      </div>
+
+      <p class="text-lg mb-6">
+        Nous soussignés, attestons que :
+      </p>
+
+      <div class="space-y-5 text-base max-w-md">
+        <div class="flex flex-col sm:flex-row sm:items-center">
+          <span class="w-32 font-semibold">Nom :</span>
+          <span class="flex-1 border-b border-black py-1">{{ stagiaire.nom }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center">
+          <span class="w-32 font-semibold">Prénom :</span>
+          <span class="flex-1 border-b border-black py-1">{{ stagiaire.prenom }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center">
+          <span class="w-32 font-semibold">CIN :</span>
+          <span class="flex-1 border-b border-black py-1">{{ stagiaire.cin }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center">
+          <span class="w-32 font-semibold">Institut :</span>
+          <span class="flex-1 border-b border-black py-1">{{ stagiaire.institut }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center">
+          <span class="w-32 font-semibold">Spécialité :</span>
+          <span class="flex-1 border-b border-black py-1">{{ stagiaire.specialite }}</span>
+        </div>
+      </div>
+
+      <p class="mt-10 text-base max-w-md">
+        A effectué un stage au sein de notre entreprise du
+        <span class="border-b border-black px-1">{{ formatDate(stagiaire.date_debut) }}</span>
+        au
+        <span class="border-b border-black px-1">{{ formatDate(stagiaire.date_fin) }}</span>
+        pour un objet de stage :
+        <span class="border-b border-black px-1">{{ stagiaire.objet_stage }}</span>
+      </p>
+
+      <div class="mt-16 max-w-md flex justify-between items-center">
+        <div class="text-base mb-0 text-right">
+          Fait à Tunis, <span class="border-b border-black px-1">{{ today }}</span>
+        </div>
+        <div class="w-48 border-t border-black text-center pt-2 text-base font-semibold ml-auto">
+          Signature
+        </div>
+      </div>
+
+    </div> <!-- end pdf-content -->
+
+  </div> <!-- end A4 container -->
+
+</div>

@@ -5,6 +5,8 @@ import {LoginComponentComponent} from './login-component/login-component.compone
 import { AddInternComponent } from './add-intern/add-intern.component';
 import { ModifyInternComponent } from './modify-intern/modify-intern.component'; 
 import { AttestationFormComponent } from './attestation-form/attestation-form.component';
+import { PdfPageComponent } from './pdf-page/pdf-page.component';
+
 
 
 const routes: Routes = [
@@ -14,7 +16,7 @@ const routes: Routes = [
   { path:'ajouter-stagiaire',  component:AddInternComponent},
   { path: 'modify-intern/:id', component:ModifyInternComponent } ,
  { path: 'attestation-form', component: AttestationFormComponent },
-
+ { path: 'pdf-page', component: PdfPageComponent },
 
 ];
 

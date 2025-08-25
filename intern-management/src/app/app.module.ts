@@ -10,6 +10,8 @@ import { GestionStagiairesComponent } from './gestion-stagiaires/gestion-stagiai
 import { AddInternComponent } from './add-intern/add-intern.component';
 import { ModifyInternComponent } from './modify-intern/modify-intern.component';
 import { AttestationFormComponent } from './attestation-form/attestation-form.component';
+import { PdfPageComponent } from './pdf-page/pdf-page.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,11 @@ import { AttestationFormComponent } from './attestation-form/attestation-form.co
   
     ModifyInternComponent,
   
-    AttestationFormComponent
+    AttestationFormComponent,
+  
+    PdfPageComponent,
+  
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,

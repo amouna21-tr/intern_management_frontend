@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { InternService } from '../services/intern.service';
+
 
 @Component({
   selector: 'app-modify-intern',
@@ -10,11 +11,11 @@ import { HttpClient } from '@angular/common/http';
 export class ModifyInternComponent implements OnInit {
   stagiaire: any = {};
   stagiaireId!: number;
-  private apiUrl = 'http://localhost:3000/api/stagiaires';
+
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
+     private internService: InternService, 
     public router: Router
   ) {}
 
@@ -23,32 +24,28 @@ export class ModifyInternComponent implements OnInit {
     this.loadStagiaire();
   }
 
-  loadStagiaire() {
-    this.http.get(`${this.apiUrl}`).subscribe((res: any) => {
-      const found = res.data.find((s: any) => s.id === this.stagiaireId);
-      if (found) {
-        this.stagiaire = found;
-      } else {
-        alert('Intern not found.');
-        this.router.navigate(['/gestion-stagiaires']);
+    loadStagiaire() {
+    this.internService.getInternById(this.stagiaireId).subscribe({
+      next: (data) => {
+        this.stagiaire = data; // Fill the form with fetched data
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Intern not found.'); // Show alert if ID is invalid
+        this.router.navigate(['/gestion-stagiaires']); // Redirect back to list
       }
-    }, err => {
-      console.error(err);
-      alert('Error fetching intern.');
     });
   }
-
   updateIntern() {
-    this.http.put(`${this.apiUrl}/${this.stagiaireId}`, this.stagiaire)
-      .subscribe({
-        next: () => {
-          alert('Intern updated successfully!');
-          this.router.navigate(['/gestion-stagiaires']);
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Error updating intern.');
-        }
-      });
+    this.internService.updateIntern(this.stagiaireId, this.stagiaire).subscribe({
+      next: () => {
+        alert('Intern updated successfully!'); // Notify user
+        this.router.navigate(['/gestion-stagiaires']); // Redirect to list page
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error updating intern.'); // Show error if update fails
+      }
+  });
   }
 }
