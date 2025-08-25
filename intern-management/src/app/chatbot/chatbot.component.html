@@ -11,6 +11,9 @@
         <img src="assets/chatbot-logo.png" alt="StegBot Logo">
       </div>
       <div class="header-info">
+        <button class="help-btn" (click)="showHelp()" title="Aide">
+          
+        </button>
         <div class="chat-title">StegBot</div>
         <div class="online-status">
           <div class="status-dot"></div>
@@ -21,7 +24,8 @@
     <button class="close-btn" (click)="toggleChat()">×</button>
   </div>
 
-  <div class="chat-messages" #chatMessages>
+  <div class="chat-messages" #messagesContainer>
+
     <div class="welcome-message" *ngIf="showWelcome">
       Bienvenue ! Je suis StegBot, votre assistant virtuel.<br>
       Comment puis-je vous aider aujourd'hui ?

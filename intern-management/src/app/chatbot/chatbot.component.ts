@@ -1,70 +1,92 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+// src/app/chatbot/chatbot.component.ts
+import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { ChatbotService, ChatbotResponse } from '../services/chatbot.service';
 
-interface Message { text: string; isUser: boolean; }
+interface Message {
+  text: string;
+  isUser: boolean;
+  timestamp?: Date;
+}
 
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css']
 })
-export class ChatbotComponent {
+export class ChatbotComponent implements AfterViewChecked {
   @ViewChild('chatMessages') chatMessages!: ElementRef;
 
-  userMessage = '';
-  messages: Message[] = [];
+  isOpen = false;
   showWelcome = true;
   isTyping = false;
-  isOpen = false;  // Start closed
+  userMessage = '';
+  messages: Message[] = [];
 
-  botResponses = [
-    "C'est intéressant ! Parlez-m'en plus.",
-    "Je comprends ce que vous dites. Comment puis-je vous aider davantage ?",
-    "Bonne question ! Laissez-moi réfléchir à cela un instant...",
-    "Je suis là pour vous aider avec toutes vos questions.",
-    "Merci de partager ces informations avec moi.",
-    "J'apprécie votre contribution. Y a-t-il quelque chose de spécifique que vous aimeriez savoir ?",
-    "C'est un bon point. Que souhaitez-vous faire ensuite ?",
-    "J'apprends toujours de nos conversations. Quoi d'autre vous préoccupe ?"
-  ];
+  constructor(private chatbotService: ChatbotService) {}
 
-  sendMessage() {
+  // Scroll automatically
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  toggleChat(): void {
+    this.isOpen = !this.isOpen;
+  }
+
+  sendMessage(): void {
     const msg = this.userMessage.trim();
     if (!msg) return;
 
+    // Add user message
     this.addMessage(msg, true);
     this.userMessage = '';
     this.showWelcome = false;
-    this.showTypingIndicator();
 
-    setTimeout(() => {
-      this.hideTypingIndicator();
-      this.addMessage(this.getBotResponse(msg), false);
-    }, 1500 + Math.random() * 1000);
+    // Show typing
+    this.isTyping = true;
+
+    // Send to backend
+    this.chatbotService.sendMessage(msg).subscribe({
+      next: (res: ChatbotResponse) => {
+        this.isTyping = false;
+        this.addMessage(res.reply || "Erreur: pas de réponse du serveur", false);
+      },
+      error: (err) => {
+        this.isTyping = false;
+        this.addMessage("⚠️ Erreur de connexion au serveur.", false);
+        console.error(err);
+      }
+    });
   }
 
-  addMessage(text: string, isUser: boolean) {
-    this.messages.push({ text, isUser });
+  addMessage(text: string, isUser: boolean): void {
+    this.messages.push({ text, isUser, timestamp: new Date() });
     setTimeout(() => this.scrollToBottom(), 0);
   }
 
-  getBotResponse(msg: string): string {
-    const m = msg.toLowerCase();
-    if (m.includes('bonjour') || m.includes('salut') || m.includes('coucou')) return "Bonjour ! Comment allez-vous aujourd'hui ?";
-    if (m.includes('aide') || m.includes('aider')) return "Je suis là pour vous aider ! De quoi avez-vous besoin ?";
-    if (m.includes('merci')) return "Je vous en prie ! Y a-t-il autre chose que je puisse faire pour vous ?";
-    if (m.includes('au revoir') || m.includes('bye')) return "Au revoir ! N'hésitez pas à revenir si vous avez d'autres questions.";
-    return this.botResponses[Math.floor(Math.random() * this.botResponses.length)];
-  }
-
-  showTypingIndicator() { this.isTyping = true; this.scrollToBottom(); }
-  hideTypingIndicator() { this.isTyping = false; }
-
-  scrollToBottom() {
-    if (this.chatMessages) {
-      const native = this.chatMessages.nativeElement;
-      native.scrollTop = native.scrollHeight;
+  scrollToBottom(): void {
+    try {
+      if (this.chatMessages) {
+        const container = this.chatMessages.nativeElement;
+        container.scrollTop = container.scrollHeight;
+      }
+    } catch (err) {
+      console.error('Erreur scroll:', err);
     }
   }
 
-  toggleChat() { this.isOpen = !this.isOpen; }
+  showHelp(): void {
+    // Optional: implement help logic with backend if needed
+    this.addMessage(
+      "Je peux vous aider avec : ajouter/rechercher/modifier/supprimer un stagiaire, générer des attestations, etc.",
+      false
+    );
+  }
+
+  onKeyPress(event: KeyboardEvent): void {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
 }
