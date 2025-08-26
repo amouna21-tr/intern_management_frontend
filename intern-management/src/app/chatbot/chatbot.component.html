@@ -11,9 +11,7 @@
         <img src="assets/chatbot-logo.png" alt="StegBot Logo">
       </div>
       <div class="header-info">
-        <button class="help-btn" (click)="showHelp()" title="Aide">
-          
-        </button>
+        <button class="help-btn" (click)="showHelp()" title="Aide"></button>
         <div class="chat-title">StegBot</div>
         <div class="online-status">
           <div class="status-dot"></div>
@@ -24,19 +22,33 @@
     <button class="close-btn" (click)="toggleChat()">×</button>
   </div>
 
-  <div class="chat-messages" #messagesContainer>
-
+  <div class="chat-messages" #chatMessages>
     <div class="welcome-message" *ngIf="showWelcome">
       Bienvenue ! Je suis StegBot, votre assistant virtuel.<br>
       Comment puis-je vous aider aujourd'hui ?
     </div>
-    <div *ngFor="let msg of messages" [ngClass]="msg.isUser ? 'user-message' : 'bot-message'" class="message">
+
+    <!-- Messages -->
+    <div *ngFor="let msg of messages; let i = index" [ngClass]="msg.isUser ? 'user-message' : 'bot-message'" class="message">
       {{ msg.text }}
+
+      <!-- Feedback buttons for last bot message -->
+      <div *ngIf="feedbackEnabled && feedbackMessageIndex === i && !msg.isUser" class="feedback-buttons">
+        <button (click)="sendFeedback(true)">👍</button>
+        <button (click)="sendFeedback(false)">👎</button>
+      </div>
     </div>
   </div>
 
   <div class="typing-indicator" *ngIf="isTyping">
     <span>•</span><span>•</span><span>•</span>
+  </div>
+
+  <!-- Quick Reply Buttons inside chat panel -->
+  <div class="quick-replies">
+    <button *ngFor="let option of quickReplies" (click)="sendQuickReply(option)">
+      {{ option }}
+    </button>
   </div>
 
   <div class="chat-input">

@@ -217,3 +217,47 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+/* Quick Reply Buttons */
+.quick-replies {
+  display: flex;
+  justify-content: space-around; /* spread buttons evenly */
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa; /* same as chat-input area */
+  border-top: 1px solid #e9ecef;
+}
+
+.quick-replies button {
+  background: #0E86D4; /* match bot color */
+  color: white;
+  border: none;
+  border-radius: 20px; /* rounded like messages */
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.quick-replies button:hover {
+  background: #0b6cb0; /* same hover as send button */
+}
+/* Feedback buttons */
+.feedback-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.feedback-buttons button {
+  background: #f1f1f1;           
+  border: 1px solid #ccc;
+  border-radius: 12px;            
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.feedback-buttons button:hover {
+  background: #e0e0e0;            
+}

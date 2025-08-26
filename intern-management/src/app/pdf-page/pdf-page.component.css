@@ -2,3 +2,12 @@
 body, div {
   font-family: 'Roboto', sans-serif;
 }
+.bold-text {
+   font-weight: bold;
+}
+.signature-block {
+  position: absolute;
+  bottom: 10mm;   /* distance from bottom of A4 */
+  
+  text-align: center;}
+  

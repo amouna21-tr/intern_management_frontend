@@ -22,9 +22,15 @@ export class ChatbotComponent implements AfterViewChecked {
   userMessage = '';
   messages: Message[] = [];
 
+  // 🔹 Quick reply options
+  quickReplies: string[] = ["⚡ Services", "📞 Contact", "📧 Email"];
+
+  // 🔹 Feedback system
+  feedbackEnabled = false;
+  feedbackMessageIndex: number | null = null;
+
   constructor(private chatbotService: ChatbotService) {}
 
-  // Scroll automatically
   ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
@@ -37,26 +43,58 @@ export class ChatbotComponent implements AfterViewChecked {
     const msg = this.userMessage.trim();
     if (!msg) return;
 
-    // Add user message
     this.addMessage(msg, true);
     this.userMessage = '';
     this.showWelcome = false;
 
-    // Show typing
     this.isTyping = true;
 
-    // Send to backend
     this.chatbotService.sendMessage(msg).subscribe({
       next: (res: ChatbotResponse) => {
         this.isTyping = false;
-        this.addMessage(res.reply || "Erreur: pas de réponse du serveur", false);
+        this.handleBotReply(res.reply || "Erreur: pas de réponse du serveur");
       },
       error: (err) => {
         this.isTyping = false;
-        this.addMessage("⚠️ Erreur de connexion au serveur.", false);
+        this.handleBotReply("⚠️ Erreur de connexion au serveur.");
         console.error(err);
       }
     });
+  }
+
+  // 🔹 Quick reply handler
+  sendQuickReply(option: string): void {
+    this.addMessage(option, true);
+    this.showWelcome = false;
+
+    if (option.includes("Services")) {
+      this.handleBotReply("Nos services incluent l’électricité, le gaz et l’assistance technique.");
+    } else if (option.includes("Contact")) {
+      this.handleBotReply("📞 Appelez 71 341 311 pour contacter STEG.");
+    } else if (option.includes("Email")) {
+      this.handleBotReply("Vous pouvez nous écrire à: dpsc@steg.com.tn📧");
+    }
+  }
+
+  // 🔹 Handle bot reply and enable feedback
+  private handleBotReply(reply: string): void {
+    this.addMessage(reply, false);
+    this.feedbackEnabled = true;
+    this.feedbackMessageIndex = this.messages.length - 1;
+  }
+
+  // 🔹 Feedback handler
+  sendFeedback(isPositive: boolean): void {
+    if (this.feedbackMessageIndex === null) return;
+
+    const lastBotMessage = this.messages[this.feedbackMessageIndex];
+    const feedbackText = isPositive ? "👍 Merci pour votre retour !" : "👎 Merci pour votre retour !";
+
+    this.addMessage(feedbackText, false);
+    console.log("Feedback:", { message: lastBotMessage.text, positive: isPositive });
+
+    this.feedbackEnabled = false;
+    this.feedbackMessageIndex = null;
   }
 
   addMessage(text: string, isUser: boolean): void {
@@ -76,7 +114,6 @@ export class ChatbotComponent implements AfterViewChecked {
   }
 
   showHelp(): void {
-    // Optional: implement help logic with backend if needed
     this.addMessage(
       "Je peux vous aider avec : ajouter/rechercher/modifier/supprimer un stagiaire, générer des attestations, etc.",
       false

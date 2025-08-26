@@ -72,7 +72,8 @@ export class PdfPageComponent implements OnInit {
       
       if (container) {
         container.style.width = '800px';
-        container.style.minHeight = 'auto';
+        container.style.height= '1000px';
+        
         container.style.padding = '30px';
         container.style.margin = '0 auto';
         container.style.boxShadow = 'none';
