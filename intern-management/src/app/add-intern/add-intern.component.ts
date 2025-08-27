@@ -17,7 +17,9 @@ export class AddInternComponent {
   dateDebut = '';
   dateFin = '';
   objetStage = '';
+  cv='';
   message = '';
+  
 
   constructor(private http: HttpClient) {}
 
@@ -37,8 +39,9 @@ export class AddInternComponent {
       specialite: this.specialite,
       dateDebut: this.dateDebut,
       dateFin: this.dateFin,
-      objetStage: this.objetStage
-    };
+      objetStage: this.objetStage,
+      cv: this.cv
+        };
 
     this.http.post<any>('http://localhost:3000/api/ajouter-stagiaire', stagiaire)
   .subscribe({
@@ -66,5 +69,6 @@ export class AddInternComponent {
     this.cin = this.nom = this.prenom = this.email = '';
     this.telephone = this.institut = this.specialite = '';
     this.dateDebut = this.dateFin = this.objetStage = '';
+    this.cv='';
   }
 }
