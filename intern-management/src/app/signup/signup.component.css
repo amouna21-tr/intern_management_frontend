@@ -1,0 +1,18 @@
+.signup-box{
+  max-width:420px;margin:40px auto;padding:28px;border-radius:12px;
+  background:#eaf2fb; box-shadow:0 10px 30px rgba(0,0,0,.08)
+}
+.logo{display:block;margin:0 auto 8px;max-height:70px}
+h2{text-align:center;margin:12px 0 18px;color:#22577a}
+.field{margin-bottom:12px}
+.field label{display:block;margin-bottom:6px;color:#244b61;font-weight:600}
+.field input{
+  width:100%;padding:10px 12px;border:1px solid #c9d6e3;border-radius:8px;background:#fff
+}
+button.primary{
+  width:100%;padding:12px;border:0;border-radius:8px;background:#5aa5f1;
+  color:#fff;font-weight:700;cursor:pointer
+}
+button.primary[disabled]{opacity:.7;cursor:not-allowed}
+.muted{margin-top:12px;text-align:center;color:#4a6072}
+.msg{margin-top:10px;text-align:center}

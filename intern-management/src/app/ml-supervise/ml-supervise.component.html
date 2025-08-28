@@ -1,0 +1,79 @@
+<div class="p-4 font-sans">
+
+  <!-- ================== KPIs ================== -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-blue-100 p-4 rounded-lg text-center">
+      <h3 class="font-semibold">Total stagiaires</h3>
+      <p class="text-xl">{{ kpi.total }}</p>
+    </div>
+    <div class="bg-green-100 p-4 rounded-lg text-center">
+      <h3 class="font-semibold">Actifs aujourd'hui</h3>
+      <p class="text-xl">{{ kpi.actifs }}</p>
+    </div>
+    <div class="bg-yellow-100 p-4 rounded-lg text-center">
+      <h3 class="font-semibold">Durée moyenne</h3>
+      <p class="text-xl">{{ kpi.avg }} jours</p>
+    </div>
+    <div class="bg-red-100 p-4 rounded-lg text-center">
+      <h3 class="font-semibold">Top institut</h3>
+      <p class="text-xl">{{ kpi.topInstitut }}</p>
+    </div>
+  </div>
+
+  <!-- ================== Graphs ================== -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <!-- Bar chart: instituts -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h3 class="font-semibold mb-4">Top instituts</h3>
+      <canvas baseChart 
+              [datasets]="barData"
+              [labels]="barLabels"
+              [options]="chartOpts"
+              [legend]="true"
+              chartType="bar">
+      </canvas>
+    </div>
+
+    <!-- Pie chart: spécialités -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h3 class="font-semibold mb-4">Top spécialités</h3>
+      <canvas baseChart
+              [data]="pieSpecData"
+              [labels]="pieSpecLabels"
+              [options]="chartOpts"
+              [legend]="true"
+              chartType="pie">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- ================== Atypiques ================== -->
+  <div class="bg-white p-4 rounded-lg shadow">
+    <h3 class="font-semibold mb-4">Stagiaires atypiques (durée)</h3>
+    <table class="w-full table-auto border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border p-2">Nom</th>
+          <th class="border p-2">Prénom</th>
+          <th class="border p-2">Institut</th>
+          <th class="border p-2">Spécialité</th>
+          <th class="border p-2">Durée (jours)</th>
+          <th class="border p-2">Z-score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of atypiques">
+          <td class="border p-2">{{ a.nom }}</td>
+          <td class="border p-2">{{ a.prenom }}</td>
+          <td class="border p-2">{{ a.institut }}</td>
+          <td class="border p-2">{{ a.specialite }}</td>
+          <td class="border p-2">{{ a.duree }}</td>
+          <td class="border p-2">{{ a.z }}</td>
+        </tr>
+        <tr *ngIf="!atypiques?.length">
+          <td colspan="6" class="text-center p-2">Aucun stagiaire atypique</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
