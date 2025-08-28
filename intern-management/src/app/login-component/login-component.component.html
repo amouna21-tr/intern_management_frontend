@@ -37,13 +37,35 @@
         <i class="fas fa-lock icon" aria-hidden="true"></i>
       </div>
 
+      <!-- Not a robot checkbox -->
+      <div class="flex items-center mb-4">
+        <input
+          type="checkbox"
+          id="notRobot"
+          [(ngModel)]="notRobot"
+          name="notRobot"
+          class="mr-2"
+        />
+        <label for="notRobot" class="text-sm text-gray-700">Je ne suis pas un robot</label>
+      </div>
+
       <!-- Backend message display -->
       <p class="text-red-500 text-sm mb-4">{{ message }}</p>
 
       <!-- Button -->
-      <button type="submit" id="submitBtn" class="submit-btn-disabled">
+      <button
+        type="submit"
+        id="submitBtn"
+        class="submit-btn-disabled"
+        [disabled]="!notRobot"
+      >
         Se connecter
       </button>
+
+      <!-- Signup link -->
+      <p class="muted mt-4 text-sm">
+        Pas de compte ? <a routerLink="/signup" class="text-blue-600 underline">Créer un compte</a>
+      </p>
     </form>
   </div>
 </div>

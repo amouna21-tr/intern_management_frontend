@@ -1,42 +1,44 @@
-<div class="signup-box">
-  <img src="assets/logo.png" alt="STEG" class="logo">
+<div class="signup-page bg-blue">
+  <div class="signup-box">
+    <img src="assets/logo.png" alt="STEG" class="logo">
 
-  <h2>Inscription</h2>
+    <h2>Inscription</h2>
 
-  <form (ngSubmit)="register()" #f="ngForm" novalidate>
-    <div class="field">
-      <label>Nom *</label>
-      <input type="text" name="nom" [(ngModel)]="nom" required />
-    </div>
+    <form (ngSubmit)="register()" #f="ngForm" novalidate>
+      <div class="field">
+        <label>Nom *</label>
+        <input type="text" name="nom" [(ngModel)]="nom" required />
+      </div>
 
-    <div class="field">
-      <label>Prénom *</label>
-      <input type="text" name="prenom" [(ngModel)]="prenom" required />
-    </div>
+      <div class="field">
+        <label>Prénom *</label>
+        <input type="text" name="prenom" [(ngModel)]="prenom" required />
+      </div>
 
-    <div class="field">
-      <label>Email *</label>
-      <input type="email" name="email" [(ngModel)]="email" required />
-    </div>
+      <div class="field">
+        <label>Email *</label>
+        <input type="email" name="email" [(ngModel)]="email" required />
+      </div>
 
-    <div class="field">
-      <label>Mot de passe *</label>
-      <input type="password" name="password" [(ngModel)]="password" minlength="6" required />
-    </div>
+      <div class="field">
+        <label>Mot de passe *</label>
+        <input type="password" name="password" [(ngModel)]="password" minlength="6" required />
+      </div>
 
-    <div class="field">
-      <label>Confirmer le mot de passe *</label>
-      <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required />
-    </div>
+      <div class="field">
+        <label>Confirmer le mot de passe *</label>
+        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required />
+      </div>
 
-    <button class="primary" type="submit" [disabled]="loading">
-      {{ loading ? 'Création…' : "Créer un compte" }}
-    </button>
-  </form>
+      <button class="primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Création…' : "Créer un compte" }}
+      </button>
+    </form>
 
-  <p class="muted">
-    Déjà inscrit ? <a routerLink="/login">Se connecter</a>
-  </p>
+    <p class="muted">
+      Déjà inscrit ? <a routerLink="/login">Se connecter</a>
+    </p>
 
-  <p class="msg" *ngIf="message">{{ message }}</p>
+    <p class="msg" *ngIf="message">{{ message }}</p>
+  </div>
 </div>

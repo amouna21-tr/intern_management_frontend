@@ -75,21 +75,13 @@
               class="w-full border border-[#D9DBF1] rounded-md px-3 py-2 text-sm placeholder:text-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#4F46E5]" />
           </div>
 
-          <!-- ✅ CV input field -->
+          <!-- CV input -->
           <div>
-            <label for="cv" class="block text-sm font-medium text-gray-700">
-              Lien du CV
-            </label>
-            <input
-              type="url"
-              id="cv"
-              name="cv"
-              [(ngModel)]="cv"
+            <label for="cv" class="block text-sm font-medium text-gray-700">Lien du CV</label>
+            <input type="url" id="cv" name="cv" [(ngModel)]="cv"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#189AB4] focus:ring-[#189AB4] sm:text-sm"
-              placeholder="https://exemple.com/cv.pdf"
-            />
+              placeholder="https://exemple.com/cv.pdf" />
           </div>
-
         </div>
       </section>
 
@@ -100,6 +92,9 @@
           Ajouter
         </button>
       </div>
+
+      <!-- Status message -->
+      <div class="text-center text-sm mt-3" *ngIf="message">{{ message }}</div>
 
     </form>
   </main>

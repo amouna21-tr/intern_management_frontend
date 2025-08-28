@@ -1,79 +1,104 @@
-<div class="p-4 font-sans">
+<div class="p-6 bg-[#60A3D9] min-h-screen">
+  <h2 class="text-2xl font-semibold mb-4">🔮 Apprentissage supervisé</h2>
 
-  <!-- ================== KPIs ================== -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-blue-100 p-4 rounded-lg text-center">
-      <h3 class="font-semibold">Total stagiaires</h3>
-      <p class="text-xl">{{ kpi.total }}</p>
+  <!-- actions -->
+  <div class="flex items-center flex-wrap gap-3 mb-4">
+    <input type="file" (change)="onFileChange($event)" accept=".csv" class="border p-2 rounded" />
+    <button (click)="train()" [disabled]="!file || training"
+            class="bg-purple-600 text-white px-3 py-2 rounded disabled:opacity-50">
+      {{ training ? 'Entraînement...' : 'Entraîner modèle (CSV)' }}
+    </button>
+
+    <button (click)="predictOnCurrentStagiaires()" [disabled]="predicting"
+            class="bg-blue-600 text-white px-3 py-2 rounded disabled:opacity-50">
+      {{ predicting ? 'Prédiction...' : 'Prédire les stagiaires actuels' }}
+    </button>
+
+    <button (click)="exportCsv()" [disabled]="!results.length"
+            class="bg-green-600 text-white px-3 py-2 rounded disabled:opacity-50">
+      Exporter CSV
+    </button>
+  </div>
+
+  <!-- charger stats DB -->
+  <div class="mt-2 mb-4">
+    <button (click)="loadDbStats()" [disabled]="dbLoading"
+            class="bg-gray-800 text-white px-3 py-2 rounded disabled:opacity-50">
+      {{ dbLoading ? 'Chargement…' : '📊 Charger les stats depuis la DB' }}
+    </button>
+    <span *ngIf="dbError" class="text-red-600 ml-2">⚠ {{ dbError }}</span>
+  </div>
+
+  <!-- messages -->
+  <div *ngIf="errorMsg" class="bg-red-100 text-red-700 p-3 rounded mb-4">{{ errorMsg }}</div>
+  <div *ngIf="metrics" class="bg-green-100 text-green-800 p-3 rounded mb-4">
+    Modèle entraîné. <span *ngIf="metrics?.n">n = {{ metrics.n }}</span>
+  </div>
+
+  <!-- KPI -->
+  <div *ngIf="!dbLoading && !dbError && kpi?.total"
+       class="grid grid-cols-1 md:grid-cols-4 gap-3 my-4 kpi-grid">
+    <div class="bg-white rounded shadow p-3">
+      <div class="text-gray-500">Total stagiaires</div>
+      <div class="text-2xl font-semibold">{{ kpi.total }}</div>
     </div>
-    <div class="bg-green-100 p-4 rounded-lg text-center">
-      <h3 class="font-semibold">Actifs aujourd'hui</h3>
-      <p class="text-xl">{{ kpi.actifs }}</p>
+    <div class="bg-white rounded shadow p-3">
+      <div class="text-gray-500">Actifs aujourd’hui</div>
+      <div class="text-2xl font-semibold">{{ kpi.actifs }}</div>
     </div>
-    <div class="bg-yellow-100 p-4 rounded-lg text-center">
-      <h3 class="font-semibold">Durée moyenne</h3>
-      <p class="text-xl">{{ kpi.avg }} jours</p>
+    <div class="bg-white rounded shadow p-3">
+      <div class="text-gray-500">Durée moyenne (j)</div>
+      <div class="text-2xl font-semibold">{{ kpi.avg }}</div>
     </div>
-    <div class="bg-red-100 p-4 rounded-lg text-center">
-      <h3 class="font-semibold">Top institut</h3>
-      <p class="text-xl">{{ kpi.topInstitut }}</p>
+    <div class="bg-white rounded shadow p-3">
+      <div class="text-gray-500">Top institut</div>
+      <div class="text-xl font-semibold">{{ kpi.topInstitut }}</div>
     </div>
   </div>
 
-  <!-- ================== Graphs ================== -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <!-- Bar chart: instituts -->
-    <div class="bg-white p-4 rounded-lg shadow">
-      <h3 class="font-semibold mb-4">Top instituts</h3>
-      <canvas baseChart 
-              [datasets]="barData"
-              [labels]="barLabels"
-              [options]="chartOpts"
-              [legend]="true"
-              chartType="bar">
-      </canvas>
+  <!-- charts -->
+  <div *ngIf="barLabels?.length || pieSpecLabels?.length"
+       class="grid grid-cols-1 md:grid-cols-2 gap-3 my-4 charts-grid">
+    <div class="bg-white rounded shadow p-3 chart-card">
+      <h4 class="font-medium mb-2">Top instituts</h4>
+      <canvas baseChart [datasets]="barData" [labels]="barLabels"
+              [options]="chartOpts" [legend]="true" [chartType]="'bar'"></canvas>
     </div>
-
-    <!-- Pie chart: spécialités -->
-    <div class="bg-white p-4 rounded-lg shadow">
-      <h3 class="font-semibold mb-4">Top spécialités</h3>
-      <canvas baseChart
-              [data]="pieSpecData"
-              [labels]="pieSpecLabels"
-              [options]="chartOpts"
-              [legend]="true"
-              chartType="pie">
-      </canvas>
+    <div class="bg-white rounded shadow p-3 chart-card">
+      <h4 class="font-medium mb-2">Top spécialités</h4>
+      <canvas baseChart [data]="pieSpecData" [labels]="pieSpecLabels"
+              [options]="chartOpts" [legend]="true" [chartType]="'pie'"></canvas>
     </div>
   </div>
 
-  <!-- ================== Atypiques ================== -->
-  <div class="bg-white p-4 rounded-lg shadow">
-    <h3 class="font-semibold mb-4">Stagiaires atypiques (durée)</h3>
-    <table class="w-full table-auto border-collapse border border-gray-200">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="border p-2">Nom</th>
-          <th class="border p-2">Prénom</th>
-          <th class="border p-2">Institut</th>
-          <th class="border p-2">Spécialité</th>
-          <th class="border p-2">Durée (jours)</th>
-          <th class="border p-2">Z-score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let a of atypiques">
-          <td class="border p-2">{{ a.nom }}</td>
-          <td class="border p-2">{{ a.prenom }}</td>
-          <td class="border p-2">{{ a.institut }}</td>
-          <td class="border p-2">{{ a.specialite }}</td>
-          <td class="border p-2">{{ a.duree }}</td>
-          <td class="border p-2">{{ a.z }}</td>
-        </tr>
-        <tr *ngIf="!atypiques?.length">
-          <td colspan="6" class="text-center p-2">Aucun stagiaire atypique</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- résultats prédiction -->
+  <div *ngIf="results?.length">
+    <h3 class="text-lg font-medium mb-2">Résultats ({{ results.length }})</h3>
+    <div class="overflow-auto">
+      <table class="min-w-full text-sm border">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 border">CIN</th>
+            <th class="p-2 border">Nom</th>
+            <th class="p-2 border">Prénom</th>
+            <th class="p-2 border">Prédiction</th>
+            <th class="p-2 border">Top prob.</th>
+            <th class="p-2 border">À revoir?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of results">
+            <td class="p-2 border">{{ r.cin }}</td>
+            <td class="p-2 border">{{ r.nom }}</td>
+            <td class="p-2 border">{{ r.prenom }}</td>
+            <td class="p-2 border font-semibold">{{ r.prediction }}</td>
+            <td class="p-2 border">{{ r.top_prob ? (r.top_prob | number:'1.2-2') : '' }}</td>
+            <td class="p-2 border">{{ r.flag_review ? 'Oui' : 'Non' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <a routerLink="/gestion-stagiaires" class="inline-block mt-6 text-blue-700 underline">← Retour</a>
 </div>

@@ -2,7 +2,7 @@
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 
-const API_BASE = (environment as any).mlApiUrl || environment.apiUrl; // si tu as mlApiUrl (Python 8000), il sera pris
+const API_BASE = environment.mlApiUrl || environment.apiUrl; // si tu as mlApiUrl (Python 8000), il sera pris
 const API = `${API_BASE}/api/ml`;
 
 @Injectable({ providedIn: "root" })
