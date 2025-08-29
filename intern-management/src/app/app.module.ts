@@ -17,6 +17,7 @@ import { MlSuperviseComponent } from './ml-supervise/ml-supervise.component';
 import { PdfPageComponent } from './pdf-page/pdf-page.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { SignupComponent } from './signup/signup.component';
+import { StatComponent } from './stat/stat.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SignupComponent } from './signup/signup.component';
     MlSuperviseComponent,
     PdfPageComponent,
     ChatbotComponent,
-    SignupComponent
+    SignupComponent,
+    StatComponent
   ],
   imports: [
     BrowserModule,

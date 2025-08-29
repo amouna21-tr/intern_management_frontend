@@ -9,18 +9,18 @@ import { AddInternComponent } from './add-intern/add-intern.component';
 import { ModifyInternComponent } from './modify-intern/modify-intern.component';
 import { AttestationFormComponent } from './attestation-form/attestation-form.component';
 import { PdfPageComponent } from './pdf-page/pdf-page.component';
-import { MlSuperviseComponent } from './ml-supervise/ml-supervise.component';
+import { StatComponent } from './stat/stat.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponentComponent },
   { path: 'login', component: LoginComponentComponent },
-  { path: 'signup', component: SignupComponent },            // Signup route
-  { path: 'gestion-stagiaires', component: GestionStagiairesComponent },
+  { path: 'signup', component: SignupComponent },            
+  { path: 'gestion-stagiaires', component: GestionStagiairesComponent},
   { path: 'ajouter-stagiaire', component: AddInternComponent },
   { path: 'modify-intern/:id', component: ModifyInternComponent },
   { path: 'attestation-form', component: AttestationFormComponent },
   { path: 'pdf-page', component: PdfPageComponent },
-  { path: 'ml-supervise', component: MlSuperviseComponent }  // ML supervision route
+  { path: 'stat', component: StatComponent }
 ];
 
 @NgModule({

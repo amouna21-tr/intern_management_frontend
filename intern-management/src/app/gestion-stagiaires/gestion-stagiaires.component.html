@@ -3,10 +3,15 @@
   <!-- Sidebar -->
   <nav class="bg-[#1f2937] w-48 flex flex-col p-6 space-y-6 text-white">
     <div class="font-bold text-white text-lg">STEG Admin</div>
-    <a class="flex items-center space-x-2 text-gray-400 hover:text-white" href="#">
-      <i class="fas fa-chart-bar"></i>
-      <span>Statistiques</span>
-    </a>
+
+   <a class="flex items-center space-x-2 text-gray-400 hover:text-white"
+   [routerLink]="['/stat']"
+   routerLinkActive="text-white">
+  <i class="fas fa-chart-bar"></i>
+  <span>Statistiques</span>
+  </a>
+
+    
     <a class="flex items-center space-x-2 text-white font-semibold bg-[#374151] rounded px-2 py-1" href="#">
       <i class="fas fa-users"></i>
       <span>Gestion des stagiaires</span>
@@ -31,10 +36,6 @@
     <div class="flex space-x-3 mb-6 justify-center">
       <button class="bg-green-500 hover:bg-green-600 text-white text-xs font-normal rounded px-3 py-1"
               [routerLink]="['/ajouter-stagiaire']">+ Ajouter stagiaire</button>
-      <button class="bg-blue-400 hover:bg-blue-500 text-white text-xs font-normal rounded px-3 py-1"
-              (click)="listeAttestations()">Liste des Attestations Retirées</button>
-      <button class="bg-purple-500 hover:bg-purple-600 text-white text-xs font-normal rounded px-3 py-1"
-              [routerLink]="['/ml-supervise']">🔮 Apprentissage supervisé</button>
       <button class="bg-gray-700 hover:bg-gray-800 text-white text-xs font-normal rounded px-3 py-1"
               (click)="printPage()">🖨 Imprimer</button>
     </div>
